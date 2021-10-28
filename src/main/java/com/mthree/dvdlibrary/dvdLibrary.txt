@@ -1,4 +1,4 @@
-Shrek::2001::PG::Vicky Jenson::DreamWorks::This is a strange take on beauty and the beast.
+Shrek::2001::R::Vicky Jenson::DreamWorks::This is a strange take on beauty and the beast.
 Shrek Forever After::2010::PG::Mike Mitchell::DreamWorks::I was such a kid when I watched these but I remember everything!
 Shrek 3::2007::PG::Chris Miller::DreamWorks::I don't really remember this one tho
-Shrek 2::2004::PG::Conrad Vernon, Andrew Adamson, Kelly Ashbury::DreamWorks::This is a test for multiple directors.
+Shrek 2::2004::PG::Vicky Jenson::DreamWorks::This is a test for multiple directors.

@@ -5,6 +5,8 @@ import com.mthree.dvdlibrary.dto.DVD;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class DVDLibraryView {
 
@@ -22,9 +24,17 @@ public class DVDLibraryView {
         io.print("\t4. List all DVDs in library");
         io.print("\t5. Display information of a DVD");
         io.print("\t6. Search for DVD by title");
-        io.print("\t7. Exit Program");
+        io.print("\t7. List all DVDs released in last N years");
+        io.print("\t8. List all DVDs with a specific rating");
+        io.print("\t9. List all DVDs with a specific Director");
+        io.print("\t10. List all DVDs by a specific Studio");
+        io.print("\t11. Get average age of all movies");
+        io.print("\t12. Find the newest DVD in the Library");
+        io.print("\t13. Find the oldest DVD in the Library");
+        io.print("\t14. Find the ave. number of notes in Library");
+        io.print("\t15. Exit Program");
 
-        return io.readInt("Please select the operation you wish to perform: ", 1, 7);
+        return io.readInt("Please select the operation you wish to perform: ", 1, 15);
     }
 
     public void displayAddDVDBanner() {
@@ -69,7 +79,7 @@ public class DVDLibraryView {
         } else {
             io.print("No DVD by that title was found in the library.");
         }
-        io.readString("Press 1 to return to Main Menu.");
+        io.readString("\nPress 1 to return to Main Menu.");
     }
 
     public void displayEditDVDBanner() {
@@ -96,7 +106,7 @@ public class DVDLibraryView {
         } else {
             io.print("No DVD by that title was found in the library.");
         }
-        io.readString("Press 1 to return to Main Menu.");
+        io.readString("\nPress 1 to return to Main Menu.");
     }
 
     public void displayListDVDBanner() {
@@ -108,7 +118,7 @@ public class DVDLibraryView {
             String dvdInfo = dvd.toString();
             io.print(dvdInfo);
         }
-        io.readString("Press 1 to return to Main Menu.");
+        io.readString("\nPress 1 to return to Main Menu.");
     }
 
     public void displayDisplayDVDBanner() {
@@ -125,7 +135,7 @@ public class DVDLibraryView {
         } else {
             io.print("No DVD by that title was found in the library.");
         }
-        io.readString("Press 1 to return to Main Menu.");
+        io.readString("\nPress 1 to return to Main Menu.");
     }
 
     public void displayDVDSearchBanner() {
@@ -142,7 +152,96 @@ public class DVDLibraryView {
         } else {
             io.print("No DVD by that title was found in the library.");
         }
-        io.readString("Press 1 to return to Main Menu.");
+        io.readString("\nPress 1 to return to Main Menu.");
+    }
+
+    public void displayDVDReleasedRecentlyBanner() {
+        io.print("\n===== DVDs Released Recently =====\n");
+    }
+
+    public int getNumberOfYearsToSearch() {
+        return io.readInt("Please enter the number of years to search: ");
+    }
+
+    public void displayDVDReleasedRecently(List<DVD> recentDvds) {
+        for(DVD dvd : recentDvds) {
+            io.print(dvd.toString());
+        }
+        io.readString("\nPress 1 to return to Main Menu.");
+    }
+
+    public void displayDVDSpecificRatingBanner() {
+        io.print("\n===== DVDs With Same Rating =====\n");
+    }
+
+    public String getRatingToSearch() {
+        return io.readString("Please enter the rating to search for: ");
+    }
+
+    public void displayDVDSpecificRating(List<DVD> recentDvds) {
+        for(DVD dvd : recentDvds) {
+            io.print(dvd.toString());
+        }
+        io.readString("\nPress 1 to return to Main Menu.");
+    }
+
+    public void displayDVDByDirectorBanner() {
+        io.print("\n===== DVDs With Same Director =====\n");
+    }
+
+    public String getDirectorToSearch() {
+        return io.readString("Please enter the Director to search for: ");
+    }
+
+    public void displayDVDByDirector(Map<String, List<DVD>> dvdsWithDirector) {
+        Set<String> dvdRatings = dvdsWithDirector.keySet();
+        for(String key : dvdRatings) {
+            io.print(dvdsWithDirector.get(key).toString());
+        }
+        io.readString("\nPress 1 to return to Main Menu.");
+    }
+
+    public void displayDVDStudioBanner() {
+        io.print("\n===== DVDs By Same Studio =====\n");
+    }
+
+    public String getStudioToSearch() {
+        return io.readString("Please enter the Studio to search for: ");
+    }
+
+    public void displayDVDStudio(List<DVD> dvdByStudio) {
+        for(DVD dvd : dvdByStudio) {
+            io.print(dvd.toString());
+        }
+        io.readString("\nPress 1 to return to Main Menu.");
+    }
+
+    public void displayAllDVDAverageAgeBanner() {io.print("\n===== Average Age All DVDs =====\n");}
+
+    public void displayAllDVDAverageAge(double aveAge) {
+        io.print("The average age of all DVDs in this library is: " + aveAge);
+        io.readString("\nPress 1 to return to Main Menu.");
+    }
+
+    public void displayNewestDVDBanner() {io.print("\n===== Newest DVD =====\n");}
+
+    public void displayNewestDVD(DVD newestDVD) {
+        io.print(newestDVD.toString());
+        io.readString("\nPress 1 to return to Main Menu.");
+    }
+
+    public void displayOldestDVDBanner() {io.print("\n===== Oldest DVD =====\n");}
+
+    public void displayOldestDVD(DVD oldestDVD) {
+        io.print(oldestDVD.toString());
+        io.readString("\nPress 1 to return to Main Menu.");
+    }
+
+    public void displayAveNumNotesBanner() {io.print("\n===== Average Number of Notes =====\n");}
+
+    public void displayAveNumNotes(double average) {
+        io.print("The average number of user notes for all DVDs is: " + average);
+        io.readString("\nPress 1 to return to Main Menu.");
     }
 
     public void displayExitBanner() {

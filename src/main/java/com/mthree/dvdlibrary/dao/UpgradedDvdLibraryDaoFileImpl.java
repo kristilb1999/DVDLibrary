@@ -4,21 +4,21 @@ import com.mthree.dvdlibrary.dto.DVD;
 
 import java.io.*;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
-public class DVDLibraryDaoFileImpl implements DVDLibraryDao {
+public class UpgradedDvdLibraryDaoFileImpl implements UpgradedDvdLibraryDao {
 
     public final String DVD_LIBRARY_FILE;
     public static final String DELIMITER = "::";
 
     private Map<String, DVD> dvdLibrary = new HashMap<>();
 
-    public DVDLibraryDaoFileImpl() {
+    public UpgradedDvdLibraryDaoFileImpl() {
         DVD_LIBRARY_FILE = "C:\\Users\\Kristi\\IdeaProjects\\DVDLibrary\\src\\main\\java\\com\\mthree\\dvdlibrary\\dvdLibrary.txt";
     }
 
-    public DVDLibraryDaoFileImpl(String libraryTextFile) {
+    public UpgradedDvdLibraryDaoFileImpl(String libraryTextFile) {
         DVD_LIBRARY_FILE = libraryTextFile;
     }
 
@@ -41,8 +41,8 @@ public class DVDLibraryDaoFileImpl implements DVDLibraryDao {
 
         DVD editedDVD = dvdLibrary.remove(title);
 
-        if(editedDVD != null) {
-            if(fieldToChange.equalsIgnoreCase("title")) {
+        if (editedDVD != null) {
+            if (fieldToChange.equalsIgnoreCase("title")) {
                 editedDVD.setTitle(newText);
             } else if (fieldToChange.equalsIgnoreCase("release date")) {
                 editedDVD.setReleaseDate(newText);
@@ -77,6 +77,106 @@ public class DVDLibraryDaoFileImpl implements DVDLibraryDao {
     //TODO: Add a search functionality that will return all DVD with titles with searched word included
     //TODO:This will also be added to interface
 
+    public List<DVD> getDVDsInLastYears(int numYears) throws DVDLibraryDaoException {
+        loadDVDLibrary();
+
+        int yearRange = LocalDate.now().getYear() - numYears;
+
+        List<DVD> dvdsInLastYears = dvdLibrary.values().stream()
+                .filter((d) -> Integer.parseInt(d.getReleaseDate()) >= yearRange)
+                .collect(Collectors.toList());
+
+        return dvdsInLastYears;
+    }
+
+    public List<DVD> getDVDsWithRating(String rating) throws DVDLibraryDaoException {
+        loadDVDLibrary();
+
+        List<DVD> dvdsWithRating = dvdLibrary.values().stream()
+                .filter((d) -> d.getRating().equalsIgnoreCase(rating))
+                .collect(Collectors.toList());
+
+        return dvdsWithRating;
+    }
+
+    public Map<String, List<DVD>> getDVDsByDirector(String director) throws DVDLibraryDaoException {
+        loadDVDLibrary();
+
+        Map<String, List<DVD>> dvdWithDirectorAndRating = dvdLibrary.values().stream()
+                .filter((d) -> d.getDirectorName().equalsIgnoreCase(director))
+                .collect(Collectors.groupingBy((d) -> d.getRating()));
+
+        return dvdWithDirectorAndRating;
+    }
+
+    public List<DVD> getDVDsByStudio(String studio) throws DVDLibraryDaoException {
+        loadDVDLibrary();
+
+        List<DVD> dvdByStudio = dvdLibrary.values().stream()
+                .filter((d) -> d.getStudio().equalsIgnoreCase(studio))
+                .collect(Collectors.toList());
+
+        return dvdByStudio;
+    }
+
+    //TODO: All methods below here until loadDVDLibrary
+    public double getAverageAgeOfAll() throws DVDLibraryDaoException {
+        loadDVDLibrary();
+
+        double averageAge = dvdLibrary.values().stream()
+                .mapToInt((d) -> LocalDate.now().getYear() - Integer.parseInt(d.getReleaseDate()))
+                .average().getAsDouble();
+
+        return averageAge;
+    }
+
+    public DVD getNewestDVD() throws DVDLibraryDaoException {
+        loadDVDLibrary();
+
+        Map<Integer, List<DVD>> dvdByReleaseDate = dvdLibrary.values().stream()
+                .collect(Collectors.groupingBy((d) -> LocalDate.now().getYear() -Integer.parseInt(d.getReleaseDate())));
+
+        Set<Integer> dvdAgeSet = dvdByReleaseDate.keySet();
+        Integer[] dvdAge = dvdAgeSet.toArray(new Integer[dvdAgeSet.size()]);
+
+        Integer currentAge = dvdAge[0];
+
+        for(Integer age : dvdAge) {
+            if(age < currentAge) {
+                currentAge = age;
+            }
+        }
+
+        DVD toReturn = dvdByReleaseDate.get(currentAge).get(0);
+
+        return toReturn;
+    }
+
+    public DVD getOldestDVD() throws DVDLibraryDaoException {
+        loadDVDLibrary();
+
+        Map<Integer, List<DVD>> dvdByReleaseDate = dvdLibrary.values().stream()
+                .collect(Collectors.groupingBy((d) -> LocalDate.now().getYear() -Integer.parseInt(d.getReleaseDate())));
+
+        Set<Integer> dvdAgeSet = dvdByReleaseDate.keySet();
+        Integer[] dvdAge = dvdAgeSet.toArray(new Integer[dvdAgeSet.size()]);
+
+        Integer currentAge = dvdAge[0];
+
+        for(Integer age : dvdAge) {
+            if(age > currentAge) {
+                currentAge = age;
+            }
+        }
+
+        DVD toReturn = dvdByReleaseDate.get(currentAge).get(0);
+
+        return toReturn;
+    }
+
+    public double getAverageNumNotes() throws DVDLibraryDaoException {
+        return 1.0;
+    }
 
     private void loadDVDLibrary() throws DVDLibraryDaoException {
         Scanner scanner;
@@ -132,7 +232,7 @@ public class DVDLibraryDaoFileImpl implements DVDLibraryDao {
 
         String dvdAsText;
         List<DVD> dvdList = this.getAllDVDs();
-        for(DVD currentDVD : dvdList) {
+        for (DVD currentDVD : dvdList) {
             dvdAsText = marshallDVD(currentDVD);
             out.println(dvdAsText);
             out.flush();
@@ -152,4 +252,5 @@ public class DVDLibraryDaoFileImpl implements DVDLibraryDao {
         return dvdAsText;
 
     }
+
 }
