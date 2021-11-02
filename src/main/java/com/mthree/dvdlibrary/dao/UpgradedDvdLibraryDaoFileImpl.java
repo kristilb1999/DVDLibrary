@@ -1,12 +1,14 @@
 package com.mthree.dvdlibrary.dao;
 
 import com.mthree.dvdlibrary.dto.DVD;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Component
 public class UpgradedDvdLibraryDaoFileImpl implements UpgradedDvdLibraryDao {
 
     public final String DVD_LIBRARY_FILE;
