@@ -1,6 +1,8 @@
 package com.mthree.dvdlibrary.dao;
 
 import com.mthree.dvdlibrary.dto.DVD;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -15,7 +17,9 @@ class DVDLibraryDaoFileImplTest {
     DVDLibraryDao testDao;
 
     public DVDLibraryDaoFileImplTest() {
-
+        ApplicationContext ctx =
+                new ClassPathXmlApplicationContext("applicationContext.xml");
+        testDao = ctx.getBean("dvdLibraryDao", DVDLibraryDaoFileImpl.class);
     }
 
     @org.junit.jupiter.api.BeforeEach
