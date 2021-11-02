@@ -1,12 +1,14 @@
 package com.mthree.dvdlibrary.dao;
 
 import com.mthree.dvdlibrary.dto.DVD;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+//@Component
 public class DVDLibraryDaoFileImpl implements DVDLibraryDao {
 
     public final String DVD_LIBRARY_FILE;

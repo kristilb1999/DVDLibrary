@@ -1,6 +1,8 @@
 package com.mthree.dvdlibrary.ui;
 
 import com.mthree.dvdlibrary.dto.DVD;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -8,10 +10,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+@Component
 public class DVDLibraryView {
 
     private UserIO io;
 
+    @Autowired
     public DVDLibraryView(UserIO io) {
         this.io = io;
     }

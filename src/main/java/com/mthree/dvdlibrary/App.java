@@ -9,6 +9,7 @@ import com.mthree.dvdlibrary.ui.DVDLibraryView;
 import com.mthree.dvdlibrary.ui.UserIO;
 import com.mthree.dvdlibrary.ui.UserIOConsoleImpl;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class App {
@@ -21,12 +22,11 @@ public class App {
 //        DVDLibraryController controller = new DVDLibraryController(myDao, myView);
 //        controller.run();
 
-        //with Sprint DI -- xml file used
-        ApplicationContext ctx =
-                new ClassPathXmlApplicationContext("applicationContext.xml");
+        AnnotationConfigApplicationContext appContext = new AnnotationConfigApplicationContext();
+        appContext.scan("com.mthree.dvdlibrary");
+        appContext.refresh();
 
-        DVDLibraryController controller =
-                ctx.getBean("controller", DVDLibraryController.class);
+        DVDLibraryController controller = appContext.getBean("DVDLibraryController", DVDLibraryController.class);
         controller.run();
 
     }

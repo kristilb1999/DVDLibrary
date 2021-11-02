@@ -17,9 +17,7 @@ class DVDLibraryDaoFileImplTest {
     DVDLibraryDao testDao;
 
     public DVDLibraryDaoFileImplTest() {
-        ApplicationContext ctx =
-                new ClassPathXmlApplicationContext("applicationContext.xml");
-        testDao = ctx.getBean("dvdLibraryDao", DVDLibraryDaoFileImpl.class);
+
     }
 
     @org.junit.jupiter.api.BeforeEach

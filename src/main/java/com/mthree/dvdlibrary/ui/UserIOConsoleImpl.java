@@ -1,7 +1,10 @@
 package com.mthree.dvdlibrary.ui;
 
+import org.springframework.stereotype.Component;
+
 import java.util.Scanner;
 
+@Component
 public class UserIOConsoleImpl implements UserIO {
 
     private Scanner in = new Scanner(System.in);

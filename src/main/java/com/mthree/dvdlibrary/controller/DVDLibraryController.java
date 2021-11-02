@@ -5,10 +5,13 @@ import com.mthree.dvdlibrary.dao.DVDLibraryDaoException;
 import com.mthree.dvdlibrary.dao.UpgradedDvdLibraryDao;
 import com.mthree.dvdlibrary.dto.DVD;
 import com.mthree.dvdlibrary.ui.DVDLibraryView;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
 
+@Component
 public class DVDLibraryController {
 
 //    private DVDLibraryDao dao;
@@ -16,11 +19,13 @@ public class DVDLibraryController {
 
     private DVDLibraryView view;
 
+//    @Autowired
 //    public DVDLibraryController(DVDLibraryDao dao, DVDLibraryView view) {
 //        this.dao = dao;
 //        this.view = view;
 //    }
 
+    @Autowired
     public DVDLibraryController(UpgradedDvdLibraryDao dao, DVDLibraryView view) {
         this.dao = dao;
         this.view = view;
